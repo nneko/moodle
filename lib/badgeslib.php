@@ -918,6 +918,19 @@ function badges_add_course_navigation(navigation_node $coursenode, stdClass $cou
                         navigation_node::TYPE_SETTING, null, 'newbadge');
             }
         }
+        else {
+             if(has_capability('moodle/badges:awardbadge', $coursecontext)){
+                $coursenode->add(get_string('coursebadges', 'badges'), null,
+                        navigation_node::TYPE_CONTAINER, null, 'coursebadges',
+                        new pix_icon('i/badge', get_string('coursebadges', 'badges')));
+
+                $url = new moodle_url($CFG->wwwroot . '/badges/index.php',
+                            array('type' => BADGE_TYPE_COURSE, 'id' => $course->id));
+
+                $coursenode->get('coursebadges')->add(get_string('managebadges', 'badges'), $url,
+                    navigation_node::TYPE_SETTING, null, 'coursebadges');
+            }
+        }
     }
 }
 
