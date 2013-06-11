@@ -517,15 +517,17 @@ class core_badges_renderer extends plugin_renderer_base {
                     $sortbyname,
                     get_string('description', 'badges'),
                     get_string('bcriteria', 'badges'),
+                    get_string('actions'),
                     $sortbyawarded
                 );
-        $table->colclasses = array('badgeimage', 'name', 'description', 'criteria', 'awards');
+        $table->colclasses = array('badgeimage', 'name', 'description', 'criteria', 'actions', 'awards');
 
         foreach ($badges->badges as $badge) {
             $badgeimage = print_badge_image($badge, $this->page->context, 'large');
             $name = $badge->name;
             $description = $badge->description;
             $criteria = self::print_badge_criteria($badge);
+            $actions = self::print_badge_table_actions($badge, $this->page->context);
             if ($badge->dateissued) {
                 $icon = new pix_icon('i/tick_green_big',
                             get_string('dateearned', 'badges',
@@ -535,7 +537,7 @@ class core_badges_renderer extends plugin_renderer_base {
             } else {
                 $awarded = "";
             }
-            $row = array($badgeimage, $name, $description, $criteria, $awarded);
+            $row = array($badgeimage, $name, $description, $criteria, $actions, $awarded);
             $table->data[] = $row;
         }
 
